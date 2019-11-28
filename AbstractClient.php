@@ -35,7 +35,7 @@ abstract class AbstractClient
      * @param callable   $endpointBuilder Allow to access endpoints.
      * @param Connection $connection      HTTP connection handler.
      */
-    public function __construct(callable $endpointBuilder, Connection $connection)
+    public function __construct($endpointBuilder, Connection $connection)
     {
         $this->endpointBuilder = $endpointBuilder;
         $this->connection = $connection;

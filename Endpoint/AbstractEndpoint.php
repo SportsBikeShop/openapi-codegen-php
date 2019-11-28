@@ -32,17 +32,17 @@ abstract class AbstractEndpoint implements EndpointInterface
     /**
      * @var array|null
      */
-    protected $routeParams = [];
+    protected $routeParams = array();
 
     /**
      * @var array|null
      */
-    protected $paramWhitelist = [];
+    protected $paramWhitelist = array();
 
     /**
      * @var array
      */
-    protected $params = [];
+    protected $params = array();
 
     /**
      * @var array|null
@@ -76,7 +76,7 @@ abstract class AbstractEndpoint implements EndpointInterface
      */
     public function getParams()
     {
-        $params = [];
+        $params = array();
 
         foreach ($this->params as $paramName => $paramVal) {
             if (in_array($paramName, $this->paramWhitelist)) {
@@ -159,10 +159,10 @@ abstract class AbstractEndpoint implements EndpointInterface
             $keyPath = explode('.', $key);
             if (count($keyPath) > 1) {
                 $suffix = implode('.', array_slice($keyPath, 1));
-                $value = $this->processParams([$suffix => $value]);
+                $value = $this->processParams(array($suffix => $value));
 
                 if (!isset($params[$keyPath[0]])) {
-                    $params[$keyPath[0]] = [];
+                    $params[$keyPath[0]] = array();
                 }
 
                 $params[$keyPath[0]] = array_merge_recursive($params[$keyPath[0]], $value);

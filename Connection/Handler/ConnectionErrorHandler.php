@@ -39,7 +39,7 @@ class ConnectionErrorHandler
      *
      * @param callable $handler original handler
      */
-    public function __construct(callable $handler)
+    public function __construct($handler)
     {
         $this->handler   = $handler;
         $this->ringUtils = new GuzzleCore();
@@ -55,9 +55,10 @@ class ConnectionErrorHandler
     public function __invoke($request)
     {
         $handler = $this->handler;
-        $response = $this->ringUtils->proxy($handler($request), function ($response) {
+        $that = $this;
+        $response = $this->ringUtils->proxy($handler($request), function ($response) use ($that) {
             if (true === isset($response['error'])) {
-                throw $this->getConnectionErrorException($response);
+                throw $that->getConnectionErrorException($response);
             }
 
             return $response;
@@ -74,7 +75,7 @@ class ConnectionErrorHandler
      *
      * @return ConnectionException
      */
-    private function getConnectionErrorException($response)
+    public function getConnectionErrorException($response)
     {
         $exception = null;
         $message = $response['error']->getMessage();

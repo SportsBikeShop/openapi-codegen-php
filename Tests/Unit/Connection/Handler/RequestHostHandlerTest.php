@@ -24,12 +24,12 @@ class RequestHostHandlerTest extends TestCase
      * Check the data are correct for host and scheme in the request.
      * Additionally check if the api prefix is append to the URI.
      *
-     * @testWith ["http://test.com", "test.com", "http"]
-     *           ["https://test.com", "test.com", "https"]
-     *           ["http://test", "test", "http"]
-     *           ["https://test", "test", "https"]
-     *           ["http://localhost:3200/foo", "localhost:3200", "http"]
-     *           ["https://localhost:3200", "localhost:3200", "https"]
+     * @testWith array("http://test.com", "test.com", "http")
+     *           array("https://test.com", "test.com", "https")
+     *           array("http://test", "test", "http")
+     *           array("https://test", "test", "https")
+     *           array("http://localhost:3200/foo", "localhost:3200", "http")
+     *           array("https://localhost:3200", "localhost:3200", "https")
      */
     public function testUrlData($apiEndpoint, $expectedHost, $expectedScheme)
     {
@@ -38,9 +38,9 @@ class RequestHostHandlerTest extends TestCase
         };
 
         $urlHandler = new RequestHostHandler($handler, $apiEndpoint);
-        $request = $urlHandler(["foo" => "bar"]);
+        $request = $urlHandler(array("foo" => "bar"));
 
-        $this->assertEquals([$expectedHost], $request['headers']['host']);
+        $this->assertEquals(array($expectedHost), $request['headers']['host']);
         $this->assertEquals($expectedScheme, $request['scheme']);
     }
 }

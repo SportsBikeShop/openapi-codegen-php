@@ -28,7 +28,7 @@ class ResponseSerializationHandler
     /**
      * @var SerializerInterface
      */
-    private $serializer;
+    public $serializer;
 
     /**
      * @var GuzzleCore
@@ -41,7 +41,7 @@ class ResponseSerializationHandler
      * @param callable            $handler    original handler
      * @param SerializerInterface $serializer serialize
      */
-    public function __construct(callable $handler, SerializerInterface $serializer)
+    public function __construct($handler, SerializerInterface $serializer)
     {
         $this->handler = $handler;
         $this->serializer = $serializer;
@@ -58,11 +58,12 @@ class ResponseSerializationHandler
     public function __invoke($request)
     {
         $handler = $this->handler;
-        $response = $this->ringUtils->proxy($handler($request), function ($response) {
+        $that = $this;
+        $response = $this->ringUtils->proxy($handler($request), function ($response) use ($that) {
             if (true === isset($response['body'])) {
                 $response['body'] = stream_get_contents($response['body']);
-                $headers = isset($response['transfer_stats']) ? $response['transfer_stats'] : [];
-                $response['body'] = $this->serializer->deserialize($response['body'], $headers);
+                $headers = isset($response['transfer_stats']) ? $response['transfer_stats'] : array();
+                $response['body'] = $that->serializer->deserialize($response['body'], $headers);
             }
 
             return $response;

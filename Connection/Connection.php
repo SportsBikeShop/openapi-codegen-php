@@ -41,7 +41,7 @@ class Connection
      * @param LoggerInterface $logger  logger used for warning & error
      * @param LoggerInterface $tracer  logger used for tracing
      */
-    public function __construct(callable $handler, LoggerInterface $logger, LoggerInterface $tracer)
+    public function __construct($handler, LoggerInterface $logger, LoggerInterface $tracer)
     {
         $this->handler = $handler;
         $this->logger = $logger;
@@ -62,19 +62,19 @@ class Connection
     {
         $handler = $this->handler;
 
-        $request = [
+        $request = array(
             'http_method' => $method,
             'uri' => $uri,
             'body' => $body,
             'query_params' => $params,
-        ];
+        );
 
         try {
             $this->tracer->info("Request:", $request);
             $response = $handler(array_filter($request))->wait();
-            $this->tracer->info("Response:", array_intersect_key($response, array_flip(['status', 'body'])));
+            $this->tracer->info("Response:", array_intersect_key($response, array_flip(array('status', 'body'))));
         } catch (\Exception $e) {
-            $this->logger->warning("Request failure:", ['request' => $request, 'error' => $e->getMessage()]);
+            $this->logger->warning("Request failure:", array('request' => $request, 'error' => $e->getMessage()));
             throw $e;
         }
 

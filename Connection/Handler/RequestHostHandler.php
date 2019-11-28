@@ -45,7 +45,7 @@ class RequestHostHandler
      * @param callable $handler Original handler
      * @param string   $host    API host (eg. http://myserver/).
      */
-    public function __construct(callable $handler, $apiEndpoint)
+    public function __construct($handler, $apiEndpoint)
     {
         $this->handler = $handler;
 
@@ -71,7 +71,7 @@ class RequestHostHandler
     public function __invoke($request)
     {
         $handler = $this->handler;
-        $request = $this->ringUtils->setHeader($request, 'host', [$this->host]);
+        $request = $this->ringUtils->setHeader($request, 'host', array($this->host));
         $request['scheme'] = $this->scheme;
 
         return $handler($request);

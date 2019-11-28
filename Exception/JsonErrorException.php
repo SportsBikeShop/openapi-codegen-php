@@ -32,7 +32,7 @@ class JsonErrorException extends \Exception implements ClientException
     /**
      * @var array
      */
-    private static $messages = [
+    private static $messages = array(
         JSON_ERROR_DEPTH => 'The maximum stack depth has been exceeded',
         JSON_ERROR_STATE_MISMATCH => 'Invalid or malformed JSON',
         JSON_ERROR_CTRL_CHAR => 'Control character error, possibly incorrectly encoded',
@@ -43,7 +43,7 @@ class JsonErrorException extends \Exception implements ClientException
         JSON_ERROR_UNSUPPORTED_TYPE => 'A value of a type that cannot be encoded was given',
         JSON_ERROR_INVALID_PROPERTY_NAME => 'Decoding of value would result in invalid PHP property name',
         JSON_ERROR_UTF16 => 'Attempted to decode nonexistent UTF-16 code-point',
-    ];
+    );
 
     /**
      * Constructor.

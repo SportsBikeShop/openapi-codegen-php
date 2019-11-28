@@ -39,7 +39,7 @@ class RequestUrlPrefixHandler
      * @param callable $handler   Original handler.
      * @param string   $uriPrefix A prefix to be added to all URIs.
      */
-    public function __construct(callable $handler, $uriPrefix)
+    public function __construct($handler, $uriPrefix)
     {
         $this->handler   = $handler;
         $this->uriPrefix = $uriPrefix;

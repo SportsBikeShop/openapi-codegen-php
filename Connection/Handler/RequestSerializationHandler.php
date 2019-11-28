@@ -41,7 +41,7 @@ class RequestSerializationHandler
      * @param callable            $handler    original handler
      * @param SerializerInterface $serializer serialize
      */
-    public function __construct(callable $handler, SerializerInterface $serializer)
+    public function __construct($handler, SerializerInterface $serializer)
     {
         $this->handler = $handler;
         $this->serializer = $serializer;
@@ -51,9 +51,9 @@ class RequestSerializationHandler
     public function __invoke($request)
     {
         $handler = $this->handler;
-        $request = $this->ringUtils->setHeader($request, 'Content-Type', ['application/json']);
+        $request = $this->ringUtils->setHeader($request, 'Content-Type', array('application/json'));
 
-        $body = isset($request['body']) ? $request['body'] : [];
+        $body = isset($request['body']) ? $request['body'] : array();
 
         if (isset($request['query_params'])) {
             $body = array_merge($body, $request['query_params']);

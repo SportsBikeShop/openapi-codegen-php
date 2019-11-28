@@ -12,6 +12,7 @@ use GuzzleHttp\Ring\Future\CompletedFutureArray;
 use PHPUnit\Framework\TestCase;
 use \Exception;
 use Elastic\OpenApi\Codegen\Connection\Handler\ConnectionErrorHandler;
+use Elastic\OpenApi\Codegen\Exception as CodegenException;
 use Elastic\OpenApi\Codegen\Exception\ConnectionException;
 use Elastic\OpenApi\Codegen\Exception\CouldNotResolveHostException;
 use Elastic\OpenApi\Codegen\Exception\CouldNotConnectToHostException;
@@ -44,7 +45,7 @@ class ConnectionErrornHandlerTest extends TestCase
             }
         );
 
-        $handlerResponse = $handler([])->wait();
+        $handlerResponse = $handler(array())->wait();
 
         if (null == $exceptionClass) {
             $this->assertEquals($response, $handlerResponse);
@@ -56,38 +57,38 @@ class ConnectionErrornHandlerTest extends TestCase
      */
     public function errorDataProvider()
     {
-        $data = [
-          [
-            ['error' => new Exception('Unknown exception')],
-            ConnectionException::class,
+        $data = array(
+          array(
+            array('error' => new Exception('Unknown exception')),
+            "Elastic\OpenApi\Codegen\Exception\ConnectionException",
             'Unknown exception',
-          ],
-          [
-            ['error' => new Exception('Unknown exception'), 'curl' => []],
-            ConnectionException::class,
+          ),
+          array(
+            array('error' => new Exception('Unknown exception'), 'curl' => array()),
+            "Elastic\OpenApi\Codegen\Exception\ConnectionException",
             'Unknown exception',
-          ],
-          [
-            ['error' => new Exception('Could not resolve host'), 'curl' => ['errno' => CURLE_COULDNT_RESOLVE_HOST]],
-            CouldNotResolveHostException::class,
+          ),
+          array(
+            array('error' => new Exception('Could not resolve host'), 'curl' => array('errno' => CURLE_COULDNT_RESOLVE_HOST)),
+            "Elastic\OpenApi\Codegen\Exception\CouldNotResolveHostException",
             'Could not resolve host',
-          ],
-          [
-            ['error' => new Exception('Could not connect to host'), 'curl' => ['errno' => CURLE_COULDNT_CONNECT]],
-            CouldNotConnectToHostException::class,
+          ),
+          array(
+            array('error' => new Exception('Could not connect to host'), 'curl' => array('errno' => CURLE_COULDNT_CONNECT)),
+            "Elastic\OpenApi\Codegen\Exception\CouldNotConnectToHostException",
             'Could not connect to host',
-          ],
-          [
-            ['error' => new Exception('Timeout exception'), 'curl' => ['errno' => CURLE_OPERATION_TIMEOUTED]],
-            OperationTimeoutException::class,
+          ),
+          array(
+            array('error' => new Exception('Timeout exception'), 'curl' => array('errno' => CURLE_OPERATION_TIMEOUTED)),
+            "Elastic\OpenApi\Codegen\Exception\OperationTimeoutException",
             'Timeout exception',
-          ],
-          [
-            ['foo' => 'bar'],
+          ),
+          array(
+            array('foo' => 'bar'),
             null,
             null,
-          ],
-        ];
+          ),
+        );
 
         return $data;
     }

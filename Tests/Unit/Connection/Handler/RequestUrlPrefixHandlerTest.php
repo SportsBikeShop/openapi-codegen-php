@@ -24,8 +24,8 @@ class RequestUrlPrefixHandlerTest extends TestCase
      * Check the data are correct for host and scheme in the request.
      * Additionally check if the api prefix is append to the URI.
      *
-     * @testWith ["/foo", "/api/v1/foo"]
-     *           ["/", "/api/v1/"]
+     * @testWith array("/foo", "/api/v1/foo")
+     *           array("/", "/api/v1/")
      */
     public function testUrlData($baseUri, $expectedUri)
     {
@@ -34,7 +34,7 @@ class RequestUrlPrefixHandlerTest extends TestCase
         };
 
         $urlHandler = new RequestUrlPrefixHandler($handler, '/api/v1/');
-        $request = $urlHandler(['uri' => $baseUri]);
+        $request = $urlHandler(array('uri' => $baseUri));
 
         $this->assertEquals($expectedUri, $request['uri']);
     }

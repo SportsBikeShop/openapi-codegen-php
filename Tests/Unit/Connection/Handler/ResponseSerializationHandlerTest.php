@@ -34,7 +34,7 @@ class ResponseSerializationHandlerTest extends TestCase
         }
 
         $handler = $this->getHandler($body);
-        $result = $handler([])->wait();
+        $result = $handler(array())->wait();
 
         if (!$expectedResult instanceof \Exception) {
             $this->assertEquals($expectedResult, $result['body']);
@@ -46,13 +46,13 @@ class ResponseSerializationHandlerTest extends TestCase
      */
     public function requestDataProvider()
     {
-        $data = [
-            ['{"foo": "bar"}', ['foo' => 'bar']],
-            ['["foo", "bar"]', ['foo', 'bar']],
-            ['{}', []],
-            ['[]', []],
+        $data = array(
+            array('{"foo": "bar"}', array('foo' => 'bar')),
+            array('["foo", "bar"]', array('foo', 'bar')),
+            array('{}', array()),
+            array('[]', array()),
             // @todo : try invalid response and exception
-        ];
+        );
 
         return $data;
     }
@@ -66,9 +66,9 @@ class ResponseSerializationHandlerTest extends TestCase
             $stream = fopen('php://memory', 'r+');
             fwrite($stream, $body);
             rewind($stream);
-            $headers = ['content_type' => 'application/json'];
+            $headers = array('content_type' => 'application/json');
 
-            return new CompletedFutureArray(['body' => $stream, 'transfer_stats' => $headers]);
+            return new CompletedFutureArray(array('body' => $stream, 'transfer_stats' => $headers));
         };
 
         $serializer = $this->getSerializer();

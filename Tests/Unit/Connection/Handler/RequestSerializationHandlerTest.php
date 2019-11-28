@@ -37,13 +37,13 @@ class RequestSerializationHandlerTest extends TestCase
      */
     public function requestDataProvider()
     {
-        $data = [
-            [['body' => ['foo' => 'bar']], '{"foo":"bar"}'],
-            [['query_params' => ['foo' => 'bar']], '{"foo":"bar"}'],
-            [['body' => ['foo' => 'bar'], 'query_params' => ['foo' => 'bar']], '{"foo":"bar"}'],
-            [['body' => ['foo1' => 'bar1'], 'query_params' => ['foo2' => 'bar2']], '{"foo1":"bar1","foo2":"bar2"}'],
-            [[], null],
-        ];
+        $data = array(
+            array(array('body' => array('foo' => 'bar')), '{"foo":"bar"}'),
+            array(array('query_params' => array('foo' => 'bar')), '{"foo":"bar"}'),
+            array(array('body' => array('foo' => 'bar'), 'query_params' => array('foo' => 'bar')), '{"foo":"bar"}'),
+            array(array('body' => array('foo1' => 'bar1'), 'query_params' => array('foo2' => 'bar2')), '{"foo1":"bar1","foo2":"bar2"}'),
+            array(array(), null),
+        );
 
         return $data;
     }
